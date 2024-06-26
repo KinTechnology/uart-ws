@@ -1,16 +1,8 @@
 const express = require( 'express');
 const { Server } = require( 'socket.io');
-const readline = require( "node:readline");
 const http = require( 'http');
 const { SerialPort } = require( "serialport");
 const { ByteLengthParser } = require( '@serialport/parser-byte-length');
-
-const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout,
-})
-
-const input = (msg = "Enter") => new Promise(resolve => rl.question(msg, value => resolve(value)))
 
 const options = {
 	cors: {
@@ -82,28 +74,3 @@ const io = new Server(server, options);
 
 	server.listen(port);
 })()
-
-const toHex = (x) => Buffer.from(x.toString(16).padStart(2, "0"), "hex")
-
-function decimalToHex(d, bytes = 1) {
-  const max = Math.pow(2, bytes * 8);
-
-	console.log("decimals", bytes);
-  if (d < 0) {
-    return Buffer.from((d + max).toString(16).padStart(bytes * 2, "0"), "hex");
-  } else {
-    return Buffer.from(d.toString(16).padStart(bytes * 2, "0"), "hex");
-  }
-}
-
-function decimalFromHex(str, bytes = 1) {
-  const max = Math.pow(2, bytes * 8);
-  const b = Buffer.from(str, "hex");
-  const d = b.readIntBE(0, b.length);
-
-  if (d > max) {
-    return d - max;
-  } else {
-    return d;
-  }
-}

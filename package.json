@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "text": "echo \"test\""
+    "build": "esbuild index.js --outfile=./dist/uart-ws.js --platform=node --bundle"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +14,8 @@
     "express": "^4.19.2",
     "serialport": "^12.0.0",
     "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.5"
   }
 }
